@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FraudShield | Secure Withdrawal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #eef3f8;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #14213d;
+            color: white;
+            padding: 22px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .shield {
+            font-size: 38px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .brand p {
+            margin: 4px 0 0;
+            color: #cbd5e1;
+            font-size: 13px;
+        }
+
+        .status {
+            background: #1f8f5f;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .main {
+            width: 92%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .intro h2 {
+            margin-bottom: 8px;
+            color: #14213d;
+        }
+
+        .intro p {
+            color: #64748b;
+        }
+
+        .balance-card {
+            background: #14213d;
+            color: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .balance-title {
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        .balance {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            color: #14213d;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .transaction-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 7px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #14213d;
+        }
+
+        .help-text {
+            margin-top: 7px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .email-section {
+            margin-top: 20px;
+        }
+
+        .email-section input {
+            width: 100%;
+        }
+
+        .security-info {
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 10px;
+            background: #f1f5f9;
+            border-left: 4px solid #14213d;
+        }
+
+        .security-info h4 {
+            margin: 0 0 8px;
+            color: #14213d;
+        }
+
+        .security-info p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .predict-btn {
+            width: 100%;
+            margin-top: 30px;
+            padding: 15px;
+            border: none;
+            border-radius: 9px;
+            background: #14213d;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .predict-btn:hover {
+            background: #243b64;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 22px;
+            border-radius: 12px;
+            text-align: center;
+            background: #e8f7ef;
+            border: 1px solid #a7dfbf;
+        }
+
+        .result h3 {
+            margin: 0 0 10px;
+            font-size: 21px;
+        }
+
+        .probability {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .otp-box {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            background: #eef4ff;
+            border: 1px solid #b8c9ed;
+        }
+
+        .otp-box h3 {
+            color: #14213d;
+            margin-top: 0;
+        }
+
+        .otp-input {
+            max-width: 300px;
+            margin: 15px auto;
+            display: block;
+            text-align: center;
+            font-size: 20px;
+            letter-spacing: 5px;
+        }
+
+        .success {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            background: #e8f7ef;
+            border: 2px solid #48b879;
+            color: #166534;
+        }
+
+        .success h2 {
+            margin: 0 0 10px;
+        }
+
+        .blocked {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            background: #fff0f0;
+            border: 2px solid #e57373;
+            color: #991b1b;
+        }
+
+        .blocked h2 {
+            margin: 0 0 10px;
+        }
+
+        .error {
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 10px;
+            background: #fff0f0;
+            border: 1px solid #f0a0a0;
+            color: #a11;
+            text-align: center;
+        }
+
+        .reset {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .reset a {
+            color: #14213d;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .footer {
+            text-align: center;
+            margin: 30px 0;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .transaction-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="shield">
+            🛡️
+        </div>
+
+        <div>
+
+            <h1>FraudShield</h1>
+
+            <p>
+                Intelligent Financial Fraud Detection System
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="status">
+        ● ML System Active
+    </div>
+
+</header>
+
+
+
+<main class="main">
+
+
+    <div class="intro">
+
+        <h2>
+            Secure Money Withdrawal
+        </h2>
+
+        <p>
+            FraudShield analyzes your transaction
+            before completing the withdrawal.
+        </p>
+
+    </div>
+
+
+
+    <!-- BALANCE -->
+
+    <div class="balance-card">
+
+        <div class="balance-title">
+            💰 Available Demo Balance
+        </div>
+
+        <div class="balance">
+            ₹{{ "%.2f"|format(balance) }}
+        </div>
+
+    </div>
+
+
+
+    <div class="card">
+
+
+        <!-- WITHDRAWAL FORM -->
+
+        <form action="/predict" method="POST">
+
+
+            <h3 class="section-title">
+                💸 Withdrawal Details
+            </h3>
+
+
+            <div class="transaction-grid">
+
+
+                <!-- TRANSACTION HOUR -->
+
+                <div class="input-group">
+
+                    <label>
+                        🕐 Transaction Hour
+                    </label>
+
+                    <input
+                        type="number"
+                        name="hour"
+                        min="0"
+                        max="23"
+                        step="1"
+                        placeholder="Enter hour (0–23)"
+                        required>
+
+                    <div class="help-text">
+                        Example: 14 means 2:00 PM
+                    </div>
+
+                </div>
+
+
+                <!-- AMOUNT -->
+
+                <div class="input-group">
+
+                    <label>
+                        💰 Withdrawal Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        name="Amount"
+                        step="0.01"
+                        min="1"
+                        placeholder="Enter amount to withdraw"
+                        required>
+
+                    <div class="help-text">
+                        Enter the amount you want to withdraw.
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- USER EMAIL -->
+
+            <div class="email-section">
+
+                <div class="input-group">
+
+                    <label>
+                        📧 Gmail Address for OTP
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your Gmail address"
+                        required>
+
+                    <div class="help-text">
+                        A transaction-specific OTP will be sent to this address.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SECURITY INFORMATION -->
+
+            <div class="security-info">
+
+                <h4>
+                    🛡️ FraudShield Security Check
+                </h4>
+
+                <p>
+                    Your transaction will first be analyzed
+                    by the machine learning model. Low and
+                    medium-risk transactions require OTP
+                    verification, while high-risk transactions
+                    may be blocked automatically.
+                </p>
+
+            </div>
+
+
+
+            <!-- ANALYZE BUTTON -->
+
+            <button
+                type="submit"
+                class="predict-btn">
+
+                🔍 Analyze & Proceed with Withdrawal
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- ML RESULT -->
+
+        {% if prediction %}
+
+        <div class="result">
+
+            <h3>
+                {{ prediction }}
+            </h3>
+
+
+            {% if probability is not none %}
+
+            <div class="probability">
+
+                Fraud Probability:
+                {{ probability }}%
+
+            </div>
+
+
+            <div style="margin-top:12px; font-size:18px;">
+
+                Risk Level:
+
+                <strong>
+                    {{ risk_icon }}
+                    {{ risk_level }}
+                </strong>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- HIGH RISK -->
+
+        {% if blocked %}
+
+        <div class="blocked">
+
+            <h2>
+                🚫 Withdrawal Blocked
+            </h2>
+
+            <p>
+                FraudShield detected a
+                high-risk transaction.
+            </p>
+
+            <p>
+                Your demo balance has
+                <strong>not</strong> been changed.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- OTP -->
+
+        {% if otp_required %}
+
+        <div class="otp-box">
+
+            <h3>
+                🔐 OTP Verification Required
+            </h3>
+
+            <p>
+                Withdrawal Amount:
+                <strong>
+                    ₹{{ "%.2f"|format(withdrawal_amount) }}
+                </strong>
+            </p>
+
+            <p>
+                An OTP has been sent to the
+                Gmail address you entered.
+            </p>
+
+
+            <form
+                action="/verify-otp"
+                method="POST">
+
+
+                <input
+                    class="otp-input"
+                    type="text"
+                    name="otp"
+                    maxlength="6"
+                    pattern="[0-9]{6}"
+                    inputmode="numeric"
+                    placeholder="6-digit OTP"
+                    required>
+
+
+                <button
+                    type="submit"
+                    class="predict-btn">
+
+                    🔐 Verify OTP & Withdraw
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- SUCCESS -->
+
+        {% if transaction_success %}
+
+        <div class="success">
+
+            <h2>
+                ✅ Withdrawal Successful
+            </h2>
+
+            <p>
+                OTP verified successfully.
+            </p>
+
+            <p>
+
+                Amount Withdrawn:
+
+                <strong>
+                    ₹{{ "%.2f"|format(withdrawn_amount) }}
+                </strong>
+
+            </p>
+
+            <p>
+
+                💰 Remaining Balance:
+
+                <strong>
+                    ₹{{ "%.2f"|format(balance) }}
+                </strong>
+
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- WRONG OTP -->
+
+        {% if transaction_blocked %}
+
+        <div class="blocked">
+
+            <h2>
+                ❌ Withdrawal Failed
+            </h2>
+
+            <p>
+                Incorrect OTP entered.
+            </p>
+
+            <p>
+                The withdrawal was not completed.
+            </p>
+
+            <p>
+
+                💰 Your demo balance remains:
+
+                <strong>
+                    ₹{{ "%.2f"|format(balance) }}
+                </strong>
+
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- RESET MESSAGE -->
+
+        {% if reset_success %}
+
+        <div class="result">
+
+            <h3>
+                🔄 Demo Account Reset
+            </h3>
+
+            <p>
+                Your demo balance is now
+                <strong>₹10,000.00</strong>.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- ERROR -->
+
+        {% if error %}
+
+        <div class="error">
+
+            {{ error }}
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- RESET -->
+
+        <div class="reset">
+
+            <a href="/reset">
+                🔄 Reset Demo Balance
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        FraudShield • Intelligent Financial
+        Fraud Detection System
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>
